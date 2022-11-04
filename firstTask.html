@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ 
+        <label for="inputOne">Введіть перше число: </label>
+        <input type="number" id="inputOne" name="inputOne">
+    
+        <label for="inputTwo">Введіть друге число: </label>
+        <input type="number" id="inputTwo" name="inputTwo"><br>
+        <button id="mullBtn">Помножити</button><br>
+        <button id="divineBtn">Поділити</button><br>
+        <button id="meanBtn">Визначити середнє арифметичне</button><br>
+        <button id="powerBtn">Складний розрахунок</button><br>
+        <div id="output"></div>
+     <script>
+        let first = document.querySelector("#inputOne");
+        let second = document.querySelector("#inputTwo");
+        let output = document.querySelector("#output");
+
+        document.querySelector("#mullBtn").addEventListener("click", function(){
+
+            let mullWorker = new Worker("mullWorker.js");
+            mullWorker.postMessage([first.value, second.value]);
+           
+             mullWorker.onmessage = function(e){
+            output.textContent = e.data
+            }
+        } );
+
+        document.querySelector("#divineBtn").addEventListener("click", function(){
+            let divineWorker = new Worker("divineWorker.js");
+            divineWorker.postMessage([first.value, second.value]);
+
+            divineWorker.onmessage = function(e){
+                output.textContent = e.data
+            }
+        });
+
+        document.querySelector("#meanBtn").addEventListener("click", function(){
+            let meanWorker = new Worker("meanWorker.js");
+           meanWorker.postMessage([first.value, second.value]);
+
+           meanWorker.onmessage = function(e){
+                output.textContent = e.data
+            }
+        });
+        
+   document.querySelector("#powerBtn").addEventListener("click", function(){
+    let powerWorker = new Worker("powerWorker.js");
+    powerWorker.postMessage([first.value, second.value])
+    powerWorker.onmessage = function(e){
+        output.textContent = e. data
+    }
+   })
+     </script> 
+
+</body>
+</html>
